@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,16 +86,18 @@ WSGI_APPLICATION = 'crypto_project.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_crypto',        # Extracted from the connection string
-        'USER': 'neondb_owner',         # Extracted from the connection string
-        'PASSWORD': '7wayktSv1rMg',    
-        'HOST': 'ep-super-night-a20brnxs-pooler.eu-central-1.aws.neon.tech',  # Extracted from the connection string
-        'PORT': '5432',                 # Default PostgreSQL port
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT', default='5432'),
         'OPTIONS': {
-            'sslmode': 'require',       # Ensure SSL mode is enabled as per the connection string
+            'sslmode': config('DATABASE_SSLMODE', default='require'),
         },
     }
 }
