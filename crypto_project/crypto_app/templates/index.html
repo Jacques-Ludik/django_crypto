@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Data Manager</title>
+</head>
+<body>
+    <div>
+        <h1>Crypto Data Manager</h1>
+        <button id="apiButton">API</button>
+        <button id="storeButton">STORE</button>
+        <button id="retrieveButton">RETRIEVE</button>
+        <h2>Login/Signup</h2>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'signup' %}">Signup</a>
+    {% endif %}
+
+    </div>
+    <script>
+        document.getElementById("apiButton").addEventListener("click", () => {
+            fetch('/api-data/')
+                .then(response => response.json())
+                .then(data => console.log("API Data:", data))
+                .catch(error => console.error("Error fetching API data:", error));
+        });
+
+        document.getElementById("storeButton").addEventListener("click", () => {
+            fetch('/store-data/')
+                .then(response => response.json())
+                .then(data => console.log("Store Response:", data))
+                .catch(error => console.error("Error storing data:", error));
+        });
+
+        document.getElementById("retrieveButton").addEventListener("click", () => {
+            fetch('/retrieve-data/')
+                .then(response => response.json())
+                .then(data => console.log("Retrieved Data:", data))
+                .catch(error => console.error("Error retrieving data:", error));
+        });
+    </script>
+</body>
+</html>
